@@ -1,0 +1,52 @@
+$ mongo
+MongoDB shell version v3.4.7
+connecting to: mongodb://127.0.0.1:27017
+MongoDB server version: 3.4.7
+
+#Display database you're using
+$ db
+
+$ sudo systemctl status mongod
+$ sudo nano /etc/mongod.conf
+
+$ use expenses
+$ db.createUser(
+   {
+     user: "devdi",
+     pwd: "password",
+     roles: [ "readWrite", "dbAdmin" ]
+   }
+)
+
+#####################################
+
+$ sudo nano /etc/mongod.conf
+$ sudo systemctl restart mongod
+
+$ mongo
+
+#1. connect to the "admin" database.
+$ use admin
+
+#2. add a user "admin" to the admin database.
+$ db.createUser({ user: "admin", pwd: "password", roles: [{ role: "userAdminAnyDatabase", db: "admin" }] })
+
+$ sudo service mongod restart
+$ sudo service mongod status
+
+#1. connect to the "admin" database.
+$ use admin
+
+##6. performs authentication, 1 means succeed, 0 means failed
+$ db.auth("admin", "password")
+
+#7. connect to the "expense" database.
+$ use expense
+
+#9. add another user "testdb" to the "testdb" database.
+$ db.createUser({ user: "devdi", pwd: "password", roles: [{ role: "dbOwner", db: "expense" }] })
+$ db.auth("devdi", "password")
+
+$ show dbs
+$ show collections
+$ db.expense.find()
