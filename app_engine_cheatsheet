@@ -1,0 +1,21 @@
+#Google App Engine is tied to the Servlet 2.5 API, so you can’t deploy a Spring boot Application because it uses the Servlet 3.0.
+#Spring Boot requires Servlet 3.0 which GAE does not have. WorkAround is to have a "spring-boot-legacy" dependency. You can check further how to implement: https://github.com/scratches/spring-boot-sample-gae
+
+2 platforms
+-App Engine Flexible
+-Container Engine (Kubernetes)
+
+Runtime differences
+App engine Standard version runs on Google internal container
+App engine flexible version runs on docker which runs on Google container
+
+#list accounts whose credentials are stored on the local system
+gcloud auth list
+
+#list the properties in your active SDK configuration
+gcloud config list
+
+#view information your Cloud SDK installation and the active SDK configurat
+gcloud info
+
+gcloud components update app-engine-java
