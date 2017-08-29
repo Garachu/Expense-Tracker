@@ -18,6 +18,8 @@ $ db.createUser(
    }
 )
 
+
+#By default, MongoDB is run in trust environment (authentication with a username and password is NOT required).
 #####################################
 
 $ sudo nano /etc/mongod.conf
@@ -50,3 +52,15 @@ $ db.auth("devdi", "password")
 $ show dbs
 $ show collections
 $ db.expense.find()
+
+
+#######################################
+mongo
+use admin
+db.auth("admin", "password")
+use expense_tracker
+db.createUser({ user: "devdi", pwd: "password", roles: [{ role: "dbOwner", db: "expense_tracker" }] })
+db.auth("devdi", "password")
+show dbs
+show collections
+db.application_user.find()

@@ -1,4 +1,4 @@
-package com.expense.module.repository;
+package com.meg.module.expense.repository;
 
 /**
  * Created by meg on 8/27/17.

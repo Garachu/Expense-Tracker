@@ -1,4 +1,4 @@
-package com.expense.module.domain;
+package com.meg.module.expense.domain;
 
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
@@ -10,7 +10,6 @@ import java.time.LocalDate;
 /**
  * Created by meg on 8/27/17.
  */
-
 
 @NoArgsConstructor
 @AllArgsConstructor

@@ -1,4 +1,4 @@
-package com.expense;
+package com.meg;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
