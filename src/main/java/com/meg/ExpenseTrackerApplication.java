@@ -1,6 +1,6 @@
 package com.meg;
 
-import com.meg.module.expense.domain.Expense;
+import com.meg.module.expense.Expense;
 import com.meg.module.expense.repository.ExpenseRepository;
 import com.meg.module.user.domain.ApplicationUser;
 import com.meg.module.user.repository.ApplicationUserRepository;
