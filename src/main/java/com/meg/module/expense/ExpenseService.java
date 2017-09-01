@@ -1,19 +1,38 @@
 package com.meg.module.expense;
 
+import com.google.api.server.spi.response.CollectionResponse;
+import com.google.api.server.spi.response.InternalServerErrorException;
+import com.google.api.server.spi.response.NotFoundException;
+
 /**
  * Created by meg on 8/30/17.
  */
+
 public class ExpenseService {
 
     private static final ExpenseRepository expenseRepository = new ExpenseRepository();
 
-    public Expense add (final Expense expense){
+    public Expense addExpense(Expense expense){
         expense.setCreatedDateNow();
         expense.updateLastModified();
-        return expenseRepository.insertEntity(expense);
+        return expenseRepository.save(expense);
     }
 
+    public Expense findExpense(Long passedId) throws NotFoundException, InternalServerErrorException {
+        return  expenseRepository.getEntity(passedId);
+    }
 
+    public CollectionResponse<Expense> findExpenses(final String cursor, final int limit){
+        return  expenseRepository.listEntity(cursor, limit);
+    }
 
+    public Expense updateExpense(final Expense expense, final Long id) throws NotFoundException, InternalServerErrorException {
+        expense.updateLastModified();
+        return expenseRepository.updateEntity(id, expense);
+    }
+
+    public void deleteExpense(final Long id) throws NotFoundException {
+        expenseRepository.deleteEntity(id);
+    }
 
 }
