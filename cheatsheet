@@ -64,3 +64,25 @@ db.auth("devdi", "password")
 show dbs
 show collections
 db.application_user.find()
+
+
+
+Local deployment to test (not recommended)
+-------------------------------------------------
+
+Change the local project
+
+gcloud config set project expense-tracker-178909
+
+2. Generate openapi.json file
+
+mvn exec:java -DGetSwaggerDoc -Dendpoints.project.id=expense-tracker-178909
+
+3. Deploying the generated API spec to App Engine
+
+gcloud service-management deploy openapi.json 4.
+
+ls
+Deploying the actual backend
+
+mvn appengine:deploy -Dendpoints.project.id=expense-tracker-178909

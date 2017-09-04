@@ -7,17 +7,10 @@
 	<groupId>com.expense</groupId>
 	<artifactId>Expense-Tracker</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<packaging>jar</packaging>
+	<packaging>war</packaging>
 
 	<name>Expense-Tracker</name>
 	<description>Demo project for Spring Boot</description>
-
-	<parent>
-		<groupId>org.springframework.boot</groupId>
-		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>1.5.6.RELEASE</version>
-		<relativePath/> <!-- lookup parent fwebtory -->
-	</parent>
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -27,7 +20,7 @@
 
 		<endpoints.framework.version>2.0.7</endpoints.framework.version>
 		<endpoints.management.version>1.0.4</endpoints.management.version>
-		<endpoints.project.id>freekenya-backend-test</endpoints.project.id>
+		<endpoints.project.id>expense-tracker-178909</endpoints.project.id>
 
 		<maven.compiler.target>1.8</maven.compiler.target>
 		<maven.compiler.source>1.8</maven.compiler.source>
@@ -36,9 +29,8 @@
 		<pubsub.version>0.22.0-beta</pubsub.version>
 	</properties>
 
-
-
 	<dependencies>
+
 		<!-- Compile/runtime dependencies -->
 		<dependency>
 			<groupId>javax.servlet</groupId>
@@ -46,58 +38,52 @@
 			<version>2.5</version>
 			<scope>provided</scope>
 		</dependency>
-
 		<dependency>
 			<groupId>com.google.endpoints</groupId>
 			<artifactId>endpoints-framework</artifactId>
 			<version>${endpoints.framework.version}</version>
 		</dependency>
-
 		<dependency>
 			<groupId>com.google.endpoints</groupId>
 			<artifactId>endpoints-management-control-appengine-all</artifactId>
 			<version>${endpoints.management.version}</version>
 		</dependency>
-
-		<!--not sure-->
 		<dependency>
 			<groupId>com.google.appengine</groupId>
 			<artifactId>appengine-api-1.0-sdk</artifactId>
 			<version>${appengine.sdk.version}</version>
 		</dependency>
-
-		<!--not sure-->
 		<dependency>
 			<groupId>com.google.appengine</groupId>
 			<artifactId>appengine-tools-sdk</artifactId>
 			<version>${appengine.sdk.version}</version>
 		</dependency>
-
+		<dependency>
+			<groupId>com.google.guava</groupId>
+			<artifactId>guava</artifactId>
+			<version>19.0</version>
+		</dependency>
 		<dependency>
 			<groupId>com.googlecode.objectify</groupId>
 			<artifactId>objectify</artifactId>
 			<version>${objectify.version}</version>
 		</dependency>
-
 		<dependency>
 			<groupId>com.google.cloud</groupId>
 			<artifactId>google-cloud-pubsub</artifactId>
 			<version>${pubsub.version}</version>
 		</dependency>
-
 		<dependency>
 			<groupId>org.projectlombok</groupId>
 			<artifactId>lombok</artifactId>
 			<version>1.16.18</version>
 			<scope>provided</scope>
 		</dependency>
-
 		<dependency>
 			<groupId>io.jsonwebtoken</groupId>
 			<artifactId>jjwt</artifactId>
 			<version>0.7.0</version>
 		</dependency>
-
 		<dependency>
 			<groupId>org.mindrot</groupId>
 			<artifactId>jbcrypt</artifactId>
@@ -146,7 +132,6 @@
 			</activation>
 			<build>
 				<plugins>
-
 					<plugin>
 						<groupId>org.codehaus.mojo</groupId>
 						<artifactId>exec-maven-plugin</artifactId>
@@ -157,8 +142,10 @@
 							<arguments>
 								<argument>get-swagger-doc</argument>
 								<argument>--hostname=${endpoints.project.id}.appspot.com</argument>
-								<argument>--war=target/echo-1.0-SNAPSHOT</argument>
-								<argument>com.example.echo.Echo</argument>
+								<argument>--war=target/Expense-Tracker-0.0.1-SNAPSHOT</argument>
+								<!--
+								<argument>expense-tracker-178909.appspot.com</argument>
+								-->
 							</arguments>
 						</configuration>
 						<dependencies>
@@ -170,26 +157,24 @@
 							<dependency>
 								<groupId>com.google.appengine</groupId>
 								<artifactId>appengine-api-1.0-sdk</artifactId>
-								<version>1.9.30</version>
+								<version>${appengine.sdk.version}</version>
 							</dependency>
 						</dependencies>
 					</plugin>
-
 				</plugins>
 			</build>
 		</profile>
 	</profiles>
 
 	<build>
-		<!-- for hot reload of the web application-->
 		<outputDirectory>${project.build.directory}/${project.build.finalName}/WEB-INF/classes</outputDirectory>
 		<plugins>
-
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-war-plugin</artifactId>
-				<version>2.6</version>
+				<version>3.1.0</version>
 				<configuration>
+					<webXml>${basedir}/src/main/webapp/WEB-INF/web.xml</webXml>
 					<webResources>
 						<resource>
 							<directory>${basedir}/src/main/webapp/WEB-INF</directory>
@@ -205,9 +190,37 @@
 				<artifactId>appengine-maven-plugin</artifactId>
 				<version>${appengine.maven.plugin.version}</version>
 			</plugin>
-
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>3.6.1</version>
+				<configuration combine.self="override"/>
+			</plugin>
+			<plugin>
+				<groupId>com.google.appengine</groupId>
+				<artifactId>appengine-maven-plugin</artifactId>
+				<version>${appengine.sdk.version}</version>
+				<configuration>
+					<enableJarClasses>false</enableJarClasses>
+					<!-- Comment in the below snippet to bind to all IPs instead of just localhost -->
+					<!-- address>0.0.0.0</address>
+                    <port>8080</port -->
+					<!-- Comment in the below snippet to enable local debugging with a remote debugger
+                         like those included with Eclipse or IntelliJ -->
+					<!-- jvmFlags>
+                      <jvmFlag>-agentlib:jdwp=transport=dt_socket,address=8000,server=y,suspend=n</jvmFlag>
+                    </jvmFlags -->
+				</configuration>
+			</plugin>
 		</plugins>
+
+		<resources>
+			<resource>
+				<directory>src/main/resources</directory>
+				<filtering>true</filtering>
+			</resource>
+		</resources>
 	</build>
-
-
 </project>
+
+

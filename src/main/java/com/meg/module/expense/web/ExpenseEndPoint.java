@@ -28,8 +28,8 @@ import static com.google.api.server.spi.config.ApiMethod.HttpMethod.*;
         version = "v1",
         namespace =
         @ApiNamespace(
-                ownerDomain = "expense.tracker.com",
-                ownerName = "expense.tracker.com",
+                ownerDomain = "expense..com",
+                ownerName = "expense.com",
                 packagePath = ""
         ),
         // [START_EXCLUDE]

@@ -23,8 +23,8 @@ import static com.google.appengine.repackaged.com.google.api.client.http.HttpMet
         version = "v1",
         namespace =
         @ApiNamespace(
-                ownerDomain = "expense.tracker.com",
-                ownerName = "expense.tracker.com",
+                ownerDomain = "expense.com",
+                ownerName = "expense.com",
                 packagePath = ""
         ),
         // [START_EXCLUDE]
