@@ -15,7 +15,7 @@ public class ExpenseService {
     public Expense addExpense(Expense expense){
         expense.setCreatedDateNow();
         expense.updateLastModified();
-        return expenseRepository.save(expense);
+        return expenseRepository.saveEntity(expense);
     }
 
     public Expense findExpense(Long passedId) throws NotFoundException, InternalServerErrorException {

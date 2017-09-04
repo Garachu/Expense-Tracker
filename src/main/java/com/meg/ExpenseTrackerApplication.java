@@ -2,8 +2,7 @@ package com.meg;
 
 import com.meg.module.expense.Expense;
 import com.meg.module.expense.repository.ExpenseRepository;
-import com.meg.module.user.domain.ApplicationUser;
-import com.meg.module.user.repository.ApplicationUserRepository;
+import com.meg.module.user.domain.ExpenseOwner;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -38,7 +37,7 @@ public class ExpenseTrackerApplication implements CommandLineRunner {
 		LocalDate localDate = LocalDate.parse(date);
 
 		expenseRepository.save(new Expense("test1", "test1", (double) 200, localDate));
-		applicationUserRepository.save(new ApplicationUser("meg", "Margaret Wambui", localDate));
+		applicationUserRepository.save(new ExpenseOwner("meg", "Margaret Wambui", localDate));
 
 		// fetch all customers
 		System.out.println("Expenses found with findAll():");

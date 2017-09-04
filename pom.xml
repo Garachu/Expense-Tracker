@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
 	<modelVersion>4.0.0</modelVersion>
 
 	<groupId>com.expense</groupId>
@@ -15,7 +16,7 @@
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
 		<version>1.5.6.RELEASE</version>
-		<relativePath/> <!-- lookup parent from repository -->
+		<relativePath/> <!-- lookup parent fwebtory -->
 	</parent>
 
 	<properties>
@@ -45,47 +46,58 @@
 			<version>2.5</version>
 			<scope>provided</scope>
 		</dependency>
+
 		<dependency>
 			<groupId>com.google.endpoints</groupId>
 			<artifactId>endpoints-framework</artifactId>
 			<version>${endpoints.framework.version}</version>
 		</dependency>
+
 		<dependency>
 			<groupId>com.google.endpoints</groupId>
 			<artifactId>endpoints-management-control-appengine-all</artifactId>
 			<version>${endpoints.management.version}</version>
 		</dependency>
+
+		<!--not sure-->
 		<dependency>
 			<groupId>com.google.appengine</groupId>
 			<artifactId>appengine-api-1.0-sdk</artifactId>
 			<version>${appengine.sdk.version}</version>
 		</dependency>
+
+		<!--not sure-->
 		<dependency>
 			<groupId>com.google.appengine</groupId>
 			<artifactId>appengine-tools-sdk</artifactId>
 			<version>${appengine.sdk.version}</version>
 		</dependency>
+
 		<dependency>
 			<groupId>com.googlecode.objectify</groupId>
 			<artifactId>objectify</artifactId>
 			<version>${objectify.version}</version>
 		</dependency>
+
 		<dependency>
 			<groupId>com.google.cloud</groupId>
 			<artifactId>google-cloud-pubsub</artifactId>
 			<version>${pubsub.version}</version>
 		</dependency>
+
 		<dependency>
 			<groupId>org.projectlombok</groupId>
 			<artifactId>lombok</artifactId>
 			<version>1.16.18</version>
 			<scope>provided</scope>
 		</dependency>
+
 		<dependency>
 			<groupId>io.jsonwebtoken</groupId>
 			<artifactId>jjwt</artifactId>
 			<version>0.7.0</version>
 		</dependency>
+
 		<dependency>
 			<groupId>org.mindrot</groupId>
 			<artifactId>jbcrypt</artifactId>
@@ -124,15 +136,76 @@
 		</dependency>
 	</dependencies>
 
+	<profiles>
+		<profile>
+			<id>GetSwaggerDoc</id>
+			<activation>
+				<property>
+					<name>GetSwaggerDoc</name>
+				</property>
+			</activation>
+			<build>
+				<plugins>
 
+					<plugin>
+						<groupId>org.codehaus.mojo</groupId>
+						<artifactId>exec-maven-plugin</artifactId>
+						<version>1.4.0</version>
+						<configuration>
+							<includePluginDependencies>true</includePluginDependencies>
+							<mainClass>com.google.api.server.spi.tools.EndpointsTool</mainClass>
+							<arguments>
+								<argument>get-swagger-doc</argument>
+								<argument>--hostname=${endpoints.project.id}.appspot.com</argument>
+								<argument>--war=target/echo-1.0-SNAPSHOT</argument>
+								<argument>com.example.echo.Echo</argument>
+							</arguments>
+						</configuration>
+						<dependencies>
+							<dependency>
+								<groupId>com.google.endpoints</groupId>
+								<artifactId>endpoints-framework-tools</artifactId>
+								<version>${endpoints.framework.version}</version>
+							</dependency>
+							<dependency>
+								<groupId>com.google.appengine</groupId>
+								<artifactId>appengine-api-1.0-sdk</artifactId>
+								<version>1.9.30</version>
+							</dependency>
+						</dependencies>
+					</plugin>
 
+				</plugins>
+			</build>
+		</profile>
+	</profiles>
 
 	<build>
+		<!-- for hot reload of the web application-->
+		<outputDirectory>${project.build.directory}/${project.build.finalName}/WEB-INF/classes</outputDirectory>
 		<plugins>
+
 			<plugin>
-				<groupId>org.springframework.boot</groupId>
-				<artifactId>spring-boot-maven-plugin</artifactId>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-war-plugin</artifactId>
+				<version>2.6</version>
+				<configuration>
+					<webResources>
+						<resource>
+							<directory>${basedir}/src/main/webapp/WEB-INF</directory>
+							<filtering>true</filtering>
+							<targetPath>WEB-INF</targetPath>
+						</resource>
+					</webResources>
+				</configuration>
 			</plugin>
+
+			<plugin>
+				<groupId>com.google.cloud.tools</groupId>
+				<artifactId>appengine-maven-plugin</artifactId>
+				<version>${appengine.maven.plugin.version}</version>
+			</plugin>
+
 		</plugins>
 	</build>
 

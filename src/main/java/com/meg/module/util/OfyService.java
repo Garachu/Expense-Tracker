@@ -20,6 +20,16 @@ import lombok.experimental.UtilityClass;
  * If the class is an inner class, the class is also marked static.
  */
 
+/**
+ * Registering Entities
+ * Before you use Objectify to load or save data, you must register all entity classes for your application
+ * Objectify will introspct these classes and their annotations to build a metamodel which is used to efficiently manipulate entities at runtime
+ * Registration must be done at application startup before Objectify is used.
+ * Registration must be single-threaded. Do not register() from multiple threads
+ * All entity classes must be registered, including polymorphic subclasses
+ * @Embed classes do not need to be registered
+ */
+
 @UtilityClass
 public class OfyService {
 
