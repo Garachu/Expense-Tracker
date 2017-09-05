@@ -1,0 +1,112 @@
+Refs
+-------
+https://cloud.google.com/appengine/docs/standard/java/gettingstarted/creating-guestbook
+https://cloud.google.com/appengine/docs/standard/java/gettingstarted/deploying-the-application
+
+Objectives
+----------
+1. Understand how to use Objectify to save data to Google Cloud Datastore.
+2. Build and test your app in the local development server.
+3. Deploy the app to production Google App Engine.
+
+Pre-requisites
+--------------------
+1. Create or select a Cloud Platform project in the Cloud Platform Console and then ensure that project includes an App Engine application.
+2. Make a note of the project ID, which might be different from the project name. The project ID is used in commands and in configurations.
+   PROJECT-ID: expense-tracker-178909
+3. You should have the Java 8 SDK installed, preferably the Enterprise Edition.
+4. Have maven installed
+
+Configurations
+-------------------------
+pom.xml 	        Project settings and dependencies used by Maven.
+appengine-web.xml 	Used to specify the project ID this application is deployed to, the application version, and the location of the logging.properties file used for application logging.
+logging.properties 	Used to set the default log level (Error, Warning, Info, and so on).
+web.xml 	        Does all the mappings required for the servlet.
+
+Building and running locally
+------------------------------------
+mvn clean
+mvn package
+#Run the following Maven command to start the application locally:
+mvn appengine:devserver - did not work
+mvn appengine:run - worked
+stop the dev server
+
+Storing Data with Objectify and Datastore
+-------------------------------------------
+Objectify dependencies in pom.xml
+    <dependency>
+      <groupId>com.google.guava</groupId>
+      <artifactId>guava</artifactId>
+      <version>${guava.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>com.googlecode.objectify</groupId>
+      <artifactId>objectify</artifactId>
+      <version>${objectify.version}</version>
+    </dependency>
+The data models
+    With Objectify, you create classes whose instances will represent data store entities in your code. Objectify does the work of translating these Java objects to the entities stored in Cloud Datastore.
+
+Objecitify Filter
+    Objectify requires a filter to clean up any thread-local transaction contexts and pending asynchronous operations that remain at the end of a request. You add this filter in web.xml as follows:
+    filter>
+      <filter-name>ObjectifyFilter</filter-name>
+      <filter-class>com.googlecode.objectify.ObjectifyFilter</filter-class>
+    </filter>
+    <filter-mapping>
+      <filter-name>ObjectifyFilter</filter-name>
+      <url-pattern>/*</url-pattern>
+    </filter-mapping>
+    <listener>
+      <listener-class>com.example.guestbook.OfyHelper</listener-class>
+    </listener>
+
+Deploying the Application
+------------------------------------------------
+generating the Google Cloud Datastore indexes required for deployment.
+    When you test and exercise your app on the development server, the development server automatically creates any Cloud Datastore indexes required to run in production
+    These indexes are generated in target/wardir/WEB-INF/appengine-generated/datastore-indexes-auto.xml and are automatically uploaded when you deploy your app.
+
+    Using the Java Local Development Server
+    ---------------------------------------
+    The App Engine SDK for Java includes a local development server for testing your application on your computer. The local development server simulates the App Engine Java runtime environment and all of its services, including Datastore.
+    #run the development web server from a command prompt. The command to run is in the SDK's appengine-java-sdk/bin/ directory.
+
+    export ENDPOINTS_SERVICE_NAME=expense-tracker-178909.appspot.com
+    /opt/appengine-java-sdk-1.9.54/bin/dev_appserver.sh /media/meg/Round/Meg/Projects/IntelliJ/Expense-Tracker/target/Expense-Tracker-0.0.1-SNAPSHOT
+
+
+
+#Update the Cloud SDK and install the Endpoints components:
+gcloud components update
+
+#Make sure that Cloud SDK (gcloud) is authorized to access your data and services on Google Cloud Platform:
+gcloud auth login
+
+#Set the default project to your project ID:
+gcloud config set project expense-tracker-178909
+
+#Building the sample project
+mvn package clean
+
+#Generating the OpenAPI configuration file
+mvn exec:java -DGetSwaggerDoc
+
+#Deploying the Endpoints configuration
+gcloud service-management deploy openapi.json
+
+#Running the sample locally
+export ENDPOINTS_SERVICE_NAME=expense-tracker-178909.appspot.com
+/opt/appengine-java-sdk-1.9.54/bin/dev_appserver.sh /media/meg/Round/Meg/Projects/IntelliJ/Expense-Tracker/target/Expense-Tracker-0.0.1-SNAPSHOT
+
+
+
+GET
+http://localhost:8080/_ah/api/expenseOwner/v1/expenseOwners
+   "label": "test",
+    "fullname":"test",
+    "description":"test"
+
+java.lang.NoSuchMethodError: com.google.api.server.spi.ObjectMapperUtil.createStandardObjectMapper()Lcom/google/appengine/repackaged/org/codehaus/jackson/map/ObjectMapper

@@ -15,6 +15,20 @@
  limitations under the License.
 -->
 <web-app xmlns="http://java.sun.com/xml/ns/javaee"  version="2.5">
+
+    <!-- Objectify -->
+    <filter>
+        <filter-name>ObjectifyFilter</filter-name>
+        <filter-class>com.googlecode.objectify.ObjectifyFilter</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>ObjectifyFilter</filter-name>
+        <url-pattern>/*</url-pattern>
+        <dispatcher>REQUEST</dispatcher>
+        <dispatcher>INCLUDE</dispatcher>
+        <dispatcher>FORWARD</dispatcher>
+    </filter-mapping>
+
     <!-- Wrap the backend with Endpoints Frameworks v2. -->
     <servlet>
         <servlet-name>EndpointsServlet</servlet-name>
