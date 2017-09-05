@@ -1,5 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
+Used to specify the project ID this application is deployed to,
+the application version,
+and the location of the logging.properties file used for application logging.
+-->
+<!--
  Copyright 2016 Google Inc.
 
  Licensed under the Apache License, Version 2.0 (the "License");

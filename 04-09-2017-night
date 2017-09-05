@@ -119,7 +119,7 @@ The instructions for setting up your computer differ by App Engine environment, 
 
  10. Running the sample locally
  	Set the ENDPOINTS_SERVICE_NAME environment variable to: [YOUR_PROJECT_ID].appspot.com
- 		export ENDPOINTS_SERVICE_NAME=test-endpointframework.appspot.com
+ 		export ENDPOINTS_SERVICE_NAME=expense-tracker-178909.appspot.com
 
  	Acquire new user credentials to use for Application Default Credentials.
  		gcloud auth application-default login
@@ -158,3 +158,42 @@ The instructions for setting up your computer differ by App Engine environment, 
 
 
  SS---mvn clean package
+
+
+Building and running locally
+ mvn clean package
+Run the following Maven command to start the application locally:
+  mvn appengine:devserver
+    Could not find goal 'devserver' in plugin com.google.cloud.tools:appengine-maven-plugin:1.3.1 among available goals deploy, deployCron, deployDispatch, deployDos, deployIndex, deployQueue, genRepoInfoFile, help, run, stage, start, stop ->
+
+ mvn appengine:devserver -U
+
+https://cloud.google.com/appengine/docs/standard/java/gettingstarted/creating-guestbook
+
+Running your application locally
+--------------------------------------------------------
+https://cloud.google.com/tools/intellij/docs/deploy-local
+1. gcloud components install app-engine-java
+
+Note: If you want to migrate from the Java App Engine SDK-based plugin (com.google.appengine.appengine-maven),
+to the Google Cloud SDK-based (com.google.cloud.tools.appengine-maven) plugin, read Migrating to the Cloud SDK.
+
+mvn appengine:run
+
+[INFO] The admin console is running at http://localhost:35623/_ah/admin
+[INFO] GCLOUD: Sep 05, 2017 7:46:34 AM com.google.appengine.tools.development.DevAppServerImpl doStart
+[INFO] GCLOUD: INFO: Dev App Server is now running
+
+
+https://expense-tracker-178909.appspot.com/_ah/start/expense/test
+
+
+10. Running the sample locally
+ 	Set the ENDPOINTS_SERVICE_NAME environment variable to: [YOUR_PROJECT_ID].appspot.com
+ 		export ENDPOINTS_SERVICE_NAME=expense-tracker-178909.appspot.com
+
+ 	Acquire new user credentials to use for Application Default Credentials.
+ 		gcloud auth application-default login
+
+ 	Run the development server:
+ 		mvn appengine:run

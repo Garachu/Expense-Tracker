@@ -46,6 +46,15 @@ public class ExpenseEndPoint {
 
     private static final ExpenseService expenseService = new ExpenseService();
 
+    /**
+     * Create a Expense in the datastoreq33
+     */
+    @ApiMethod(name = "test", path="test", httpMethod = GET)
+    public String test(){
+
+        return "Hey there";
+    }
+
 
     /**
      * Create a Expense in the datastoreq33
