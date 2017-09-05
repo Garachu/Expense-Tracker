@@ -32,9 +32,10 @@ and the location of the logging.properties file used for application logging.
         <property name="java.util.logging.config.file" value="WEB-INF/logging.properties"/>
     </system-properties>
 
-    <!--
-   <env-variables>
-        <env-var name="ENDPOINTS_SERVICE_NAME" value="expense-tracker-178909.appspot.com" />
+    <env-variables>
+        <env-var name="ENDPOINTS_SERVICE_NAME" value="${endpoints.project.id}.appspot.com" />
     </env-variables>
-    -->
+
+
+
 </appengine-web-app>

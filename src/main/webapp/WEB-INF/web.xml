@@ -21,14 +21,16 @@
         <servlet-class>com.google.api.server.spi.EndpointsServlet</servlet-class>
         <init-param>
             <param-name>services</param-name>
-           <!-- <param-value>${endpoints.project.id}</param-value>-->
-            <param-value>${endpoints.project.id}.appspot.com</param-value>
+            <param-value>
+                com.meg.module.expense.web.ExpenseEndPoint,
+                com.meg.module.user.web.ExpenseOwnerEndPoint
+            </param-value>
         </init-param>
     </servlet>
     <!-- Route API method requests to the backend. -->
     <servlet-mapping>
         <servlet-name>EndpointsServlet</servlet-name>
-        <url-pattern>/_ah/api/*</url-pattern>
+        <url-pattern>/_ah/start/*</url-pattern>
     </servlet-mapping>
     <welcome-file-list>
         <welcome-file>index.html</welcome-file>

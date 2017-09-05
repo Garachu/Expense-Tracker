@@ -1,0 +1,301 @@
+{
+ "swagger": "2.0",
+ "info": {
+  "version": "1.0.0",
+  "title": "expense-tracker-178909.appspot.com"
+ },
+ "host": "expense-tracker-178909.appspot.com",
+ "basePath": "/_ah/api",
+ "schemes": [
+  "https"
+ ],
+ "consumes": [
+  "application/json"
+ ],
+ "produces": [
+  "application/json"
+ ],
+ "paths": {
+  "/expense/v1/expenses": {
+   "get": {
+    "operationId": "ExpenseListExpenses",
+    "parameters": [
+     {
+      "name": "cursor",
+      "in": "query",
+      "required": false,
+      "type": "string"
+     },
+     {
+      "name": "limit",
+      "in": "query",
+      "required": false,
+      "type": "integer",
+      "format": "int32"
+     }
+    ],
+    "responses": {
+     "200": {
+      "description": "A successful response",
+      "schema": {
+       "$ref": "#/definitions/CollectionResponse_Expense"
+      }
+     }
+    }
+   },
+   "post": {
+    "operationId": "ExpenseAddExpense",
+    "parameters": [
+     {
+      "in": "body",
+      "name": "body",
+      "required": false,
+      "schema": {
+       "$ref": "#/definitions/Expense"
+      }
+     }
+    ],
+    "responses": {
+     "200": {
+      "description": "A successful response",
+      "schema": {
+       "$ref": "#/definitions/Expense"
+      }
+     }
+    }
+   }
+  },
+  "/expense/v1/expenses/{id}": {
+   "get": {
+    "operationId": "ExpenseGetExpense",
+    "parameters": [
+     {
+      "name": "id",
+      "in": "path",
+      "required": true,
+      "type": "integer",
+      "format": "int64"
+     }
+    ],
+    "responses": {
+     "200": {
+      "description": "A successful response",
+      "schema": {
+       "$ref": "#/definitions/Expense"
+      }
+     }
+    }
+   },
+   "put": {
+    "operationId": "ExpenseUpdateExpense",
+    "parameters": [
+     {
+      "name": "id",
+      "in": "path",
+      "required": true,
+      "type": "integer",
+      "format": "int64"
+     },
+     {
+      "in": "body",
+      "name": "body",
+      "required": false,
+      "schema": {
+       "$ref": "#/definitions/Expense"
+      }
+     }
+    ],
+    "responses": {
+     "200": {
+      "description": "A successful response",
+      "schema": {
+       "$ref": "#/definitions/Expense"
+      }
+     }
+    }
+   },
+   "delete": {
+    "operationId": "ExpenseDeleteExpense",
+    "parameters": [
+     {
+      "name": "id",
+      "in": "path",
+      "required": true,
+      "type": "integer",
+      "format": "int64"
+     }
+    ],
+    "responses": {
+     "200": {
+      "description": "A successful response"
+     }
+    }
+   }
+  },
+  "/expenseOwner/v1/expenseOwners": {
+   "get": {
+    "operationId": "ExpenseOwnerListExpenseOwners",
+    "parameters": [
+     {
+      "name": "cursor",
+      "in": "query",
+      "required": false,
+      "type": "string"
+     },
+     {
+      "name": "limit",
+      "in": "query",
+      "required": false,
+      "type": "integer",
+      "format": "int32"
+     }
+    ],
+    "responses": {
+     "200": {
+      "description": "A successful response",
+      "schema": {
+       "$ref": "#/definitions/CollectionResponse_ExpenseOwner"
+      }
+     }
+    }
+   },
+   "post": {
+    "operationId": "ExpenseOwnerAddExpenseOwner",
+    "parameters": [
+     {
+      "in": "body",
+      "name": "body",
+      "required": false,
+      "schema": {
+       "$ref": "#/definitions/ExpenseOwner"
+      }
+     }
+    ],
+    "responses": {
+     "200": {
+      "description": "A successful response",
+      "schema": {
+       "$ref": "#/definitions/ExpenseOwner"
+      }
+     }
+    }
+   }
+  },
+  "/expenseOwner/v1/expenseOwners/{id}": {
+   "get": {
+    "operationId": "ExpenseOwnerGetExpenseOwner",
+    "parameters": [
+     {
+      "name": "id",
+      "in": "path",
+      "required": true,
+      "type": "integer",
+      "format": "int64"
+     }
+    ],
+    "responses": {
+     "200": {
+      "description": "A successful response",
+      "schema": {
+       "$ref": "#/definitions/ExpenseOwner"
+      }
+     }
+    }
+   }
+  }
+ },
+ "securityDefinitions": {
+  "firebase": {
+   "type": "oauth2",
+   "authorizationUrl": "",
+   "flow": "implicit",
+   "x-google-issuer": "https://securetoken.google.com/test-endpointframework",
+   "x-google-jwks_uri": "https://www.googleapis.com/robot/v1/metadata/x509/securetoken@system.gserviceaccount.com"
+  }
+ },
+ "definitions": {
+  "CollectionResponse_Expense": {
+   "properties": {
+    "items": {
+     "type": "array",
+     "items": {
+      "$ref": "#/definitions/Expense"
+     }
+    },
+    "nextPageToken": {
+     "type": "string"
+    }
+   }
+  },
+  "ExpenseOwner": {
+   "properties": {
+    "createdDate": {
+     "type": "string",
+     "format": "date-time"
+    },
+    "description": {
+     "type": "string"
+    },
+    "expenses": {
+     "type": "array",
+     "items": {
+      "$ref": "#/definitions/Expense"
+     }
+    },
+    "fullname": {
+     "type": "string"
+    },
+    "id": {
+     "type": "integer",
+     "format": "int64"
+    },
+    "label": {
+     "type": "string"
+    },
+    "lastModifiedDate": {
+     "type": "string",
+     "format": "date-time"
+    }
+   }
+  },
+  "Expense": {
+   "properties": {
+    "amount": {
+     "type": "number",
+     "format": "double"
+    },
+    "createdDate": {
+     "type": "string",
+     "format": "date-time"
+    },
+    "description": {
+     "type": "string"
+    },
+    "id": {
+     "type": "integer",
+     "format": "int64"
+    },
+    "label": {
+     "type": "string"
+    },
+    "lastModifiedDate": {
+     "type": "string",
+     "format": "date-time"
+    }
+   }
+  },
+  "CollectionResponse_ExpenseOwner": {
+   "properties": {
+    "items": {
+     "type": "array",
+     "items": {
+      "$ref": "#/definitions/ExpenseOwner"
+     }
+    },
+    "nextPageToken": {
+     "type": "string"
+    }
+   }
+  }
+ }
+}

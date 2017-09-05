@@ -28,7 +28,7 @@ import static com.google.api.server.spi.config.ApiMethod.HttpMethod.*;
         version = "v1",
         namespace =
         @ApiNamespace(
-                ownerDomain = "expense..com",
+                ownerDomain = "expense.com",
                 ownerName = "expense.com",
                 packagePath = ""
         ),
@@ -49,11 +49,11 @@ public class ExpenseEndPoint {
     /**
      * Create a Expense in the datastoreq33
      */
-    @ApiMethod(name = "test", path="test", httpMethod = GET)
-    public String test(){
-
-        return "Hey there";
-    }
+//    @ApiMethod(name = "test", path="test", httpMethod = GET)
+//    public String test(){
+//
+//        return "Hey there";
+//    }
 
 
     /**
