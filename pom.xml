@@ -38,6 +38,8 @@
 			<version>2.5</version>
 			<scope>provided</scope>
 		</dependency>
+
+		<!--Endpoints Dependencies-->
 		<dependency>
 			<groupId>com.google.endpoints</groupId>
 			<artifactId>endpoints-framework</artifactId>
@@ -48,6 +50,8 @@
 			<artifactId>endpoints-management-control-appengine-all</artifactId>
 			<version>${endpoints.management.version}</version>
 		</dependency>
+
+		<!--appengine dependencies-->
 		<dependency>
 			<groupId>com.google.appengine</groupId>
 			<artifactId>appengine-api-1.0-sdk</artifactId>
@@ -58,32 +62,42 @@
 			<artifactId>appengine-tools-sdk</artifactId>
 			<version>${appengine.sdk.version}</version>
 		</dependency>
+
+		<!--Objectify Dependencies-->
+		<!--
 		<dependency>
 			<groupId>com.google.guava</groupId>
 			<artifactId>guava</artifactId>
 			<version>19.0</version>
 		</dependency>
+		-->
 		<dependency>
 			<groupId>com.googlecode.objectify</groupId>
 			<artifactId>objectify</artifactId>
 			<version>${objectify.version}</version>
 		</dependency>
+
 		<dependency>
 			<groupId>com.google.cloud</groupId>
 			<artifactId>google-cloud-pubsub</artifactId>
 			<version>${pubsub.version}</version>
 		</dependency>
+
+		<!--lombok dependency-->
 		<dependency>
 			<groupId>org.projectlombok</groupId>
 			<artifactId>lombok</artifactId>
 			<version>1.16.18</version>
 			<scope>provided</scope>
 		</dependency>
+
+		<!--security dependency-->
 		<dependency>
 			<groupId>io.jsonwebtoken</groupId>
 			<artifactId>jjwt</artifactId>
 			<version>0.7.0</version>
 		</dependency>
+
 		<dependency>
 			<groupId>org.mindrot</groupId>
 			<artifactId>jbcrypt</artifactId>
@@ -143,6 +157,8 @@
 								<argument>get-swagger-doc</argument>
 								<argument>--hostname=${endpoints.project.id}.appspot.com</argument>
 								<argument>--war=target/Expense-Tracker-0.0.1-SNAPSHOT</argument>
+								<argument>com.meg.module.expense.web.ExpenseEndPoint</argument>
+								<argument>com.meg.module.user.web.ExpenseOwnerEndPoint</argument>
 								<!--
 								<argument>expense-tracker-178909.appspot.com</argument>
 								-->
@@ -196,22 +212,7 @@
 				<version>3.6.1</version>
 				<configuration combine.self="override"/>
 			</plugin>
-			<plugin>
-				<groupId>com.google.appengine</groupId>
-				<artifactId>appengine-maven-plugin</artifactId>
-				<version>${appengine.sdk.version}</version>
-				<configuration>
-					<enableJarClasses>false</enableJarClasses>
-					<!-- Comment in the below snippet to bind to all IPs instead of just localhost -->
-					<!-- address>0.0.0.0</address>
-                    <port>8080</port -->
-					<!-- Comment in the below snippet to enable local debugging with a remote debugger
-                         like those included with Eclipse or IntelliJ -->
-					<!-- jvmFlags>
-                      <jvmFlag>-agentlib:jdwp=transport=dt_socket,address=8000,server=y,suspend=n</jvmFlag>
-                    </jvmFlags -->
-				</configuration>
-			</plugin>
+
 		</plugins>
 
 		<resources>

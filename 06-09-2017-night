@@ -1,0 +1,46 @@
+Datastore
+-------------------
+mvn clean package clears the datastore-indexes-auto.xml file. If you run it on your app prior to deploying, you won't get required indexes and you won't be able to deploy successfully.
+
+
+
+#Update the Cloud SDK and install the Endpoints components:
+gcloud components update
+
+#Make sure that Cloud SDK (gcloud) is authorized to access your data and services on Google Cloud Platform:
+gcloud auth login
+
+#Set the default project to your project ID:
+gcloud config set project expense-tracker-178909
+
+#Building the sample project
+mvn package clean
+
+#Generating the OpenAPI configuration file
+mvn exec:java -DGetSwaggerDoc
+
+#Deploying the Endpoints configuration
+gcloud service-management deploy openapi.json
+
+#Set the ENDPOINTS_SERVICE_NAME environment variable to: [YOUR_PROJECT_ID].appspot.com
+export ENDPOINTS_SERVICE_NAME=expense-tracker-178909.appspot.com
+
+#Acquire new user credentials to use for Application Default Credentials.
+gcloud auth application-default login
+
+#Run the development server:
+mvn appengine:run
+/opt/appengine-java-sdk-1.9.54/bin/dev_appserver.sh /media/meg/Round/Meg/Projects/IntelliJ/Expense-Tracker/target/Expense-Tracker-0.0.1-SNAPSHOT
+
+#Run deploy online
+mvn appengine:deploy
+
+GET     http://localhost:8080/_ah/api/expense/v1/expenses
+ISSUE 1:
+java.lang.NoClassDefFoundError: Could not initialize class com.google.api.server.spi.tools.devserver.RestApiServlet
+    Removed guava dependency
+
+ISSUE 2:
+java.lang.NoSuchMethodError: com.google.api.server.spi.ObjectMapperUtil.createStandardObjectMapper()Lcom/google/appengine/repackaged/org/codehaus/jackson/map/ObjectMappe
+https://stackoverflow.com/questions/16975899/understanding-a-jsonmappingexception-with-google-endpoint
+

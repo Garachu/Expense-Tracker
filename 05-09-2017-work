@@ -275,6 +275,6 @@ https://cloud.google.com/appengine/docs/standard/php/how-instances-are-managed
 
 GET
 http://localhost:8080/_ah/api/expenseOwner/v1/expenseOwners
-   "label": "test",
+   {"label": "test",
     "fullname":"test",
-    "description":"test"
+    "description":"test"}

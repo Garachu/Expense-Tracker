@@ -22,6 +22,7 @@ and the location of the logging.properties file used for application logging.
 <appengine-web-app xmlns="http://appengine.google.com/ns/1.0">
     <application>${endpoints.project.id}</application>
     <version>1</version>
+    <runtime>java8</runtime>
     <threadsafe>true</threadsafe>
 
     <basic-scaling>
