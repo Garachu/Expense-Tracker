@@ -27,23 +27,18 @@ public class Expense extends BaseEntity{
     @NonNull
     public Double amount;
 
-    /**
-      * A relationship is simply a key stored as a field in an entity.
-      * 1.  com.google.appengine.api.datastore.Key, usually referred to as Key
-      * 2.  com.googlecode.objectify.Key, usually referred to as Key<?>
-      * 3.  com.googlecode.objectify.Ref
-      * Even Key<?>s are not very convenient when you are working with graphs of entities.
-      * Objectify provides Ref<?>, which works just like a Key<?> but allows you to directly access the actual entity object as well:
-      * Ref<?> fields are stored as native Key fields in the datastore. You can freely swap between Key, Key<?>, and Ref<?> in your Java data model without modifying stored data.
-      * The reference to the Expense owner (Expense Entity)
-      *
-      * Load annotation explanation:
-      * Makes for optimal batch-by-type queries to datastore, also caches it intelligently by optimalisation algorithm.
-      *
+
+    /*
+     *A ExpenseOwner can have many Expense, but one Expense is only related to one ExpenseOwner. It's the typical ( 1 : N ) relationship
+     * ExpenseOwner is an @Entity
+     * Ref<?> does not hold actual references, it only holds the Key<?> and offers a get() method that will do an ofy().load() behind the scenes for you
+     * @Load annotations let you configure what gets loaded into the session cache when you load the original entity.
+     * With Ref<?> and @Load, you may need fewer calls to the DB; it depends on your usage profile and the shape of your data.
      */
     @Load
     @NonNull
-    Ref<ExpenseOwner> expenseOwner; // ExpenseOwner is an @Entity
+    Ref<ExpenseOwner> expenseOwner;
+
 
     /**
      * Get actual expenseOwner entity, not just the reference.

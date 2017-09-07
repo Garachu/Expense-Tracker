@@ -2,6 +2,7 @@ package com.meg.module.core;
 
 import com.googlecode.objectify.annotation.Entity;
 import com.googlecode.objectify.annotation.Id;
+import lombok.NoArgsConstructor;
 import lombok.NonNull;
 
 import java.util.Date;
@@ -15,11 +16,12 @@ import java.util.Date;
   * Abstract method is a method that is declared, but contains no implementation.
   * Abstract classes may not instantiated, and require subclasses to provide implementations for the abstract methods
  */
-
+@NoArgsConstructor
 @Entity
 public abstract class BaseEntity {
 
     @Id
+    // Objectify auto-generates Long IDs just like JDO / JPA
     private Long id;
 
     @NonNull
@@ -27,6 +29,8 @@ public abstract class BaseEntity {
 
     @NonNull
     private Date lastModifiedDate;
+
+
 
     public Long getId(){
         return this.id;

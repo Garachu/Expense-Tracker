@@ -44,3 +44,5 @@ ISSUE 2:
 java.lang.NoSuchMethodError: com.google.api.server.spi.ObjectMapperUtil.createStandardObjectMapper()Lcom/google/appengine/repackaged/org/codehaus/jackson/map/ObjectMappe
 https://stackoverflow.com/questions/16975899/understanding-a-jsonmappingexception-with-google-endpoint
 
+https://turbomanage.wordpress.com/2010/01/28/simplify-with-objectify/
+
