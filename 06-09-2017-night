@@ -50,19 +50,19 @@ mvn appengine:deploy
   "label":"test",
   "description":"test",
   "amount":100,
-  "expenseOwner":"5629499534213120"
+  "expenseOwner":"5066549580791808"
  }
 
  RESPONSE
  =========
- {
-     "id": "5066549580791808",
-     "createdDate": "2017-09-07T23:15:57.332+03:00",
-     "lastModifiedDate": "2017-09-07T23:15:57.332+03:00",
-     "label": "test",
-     "description": "test",
-     "amount": 100
- }
+{
+    "id": "5629499534213120",
+    "createdDate": "2017-09-08T17:36:38.877+03:00",
+    "lastModifiedDate": "2017-09-08T17:36:38.877+03:00",
+    "label": "test",
+    "description": "test",
+    "amount": 100
+}
 
  --------------------------------------------------------------------------------
 
@@ -78,14 +78,13 @@ POST    http://localhost:8080/_ah/start/expenseOwner/v1/expenseOwners
 RESPONSE
 =========
 {
-    "id": "5629499534213120",
-    "createdDate": "2017-09-07T23:14:53.708+03:00",
-    "lastModifiedDate": "2017-09-07T23:14:53.708+03:00",
+    "id": "5066549580791808",
+    "createdDate": "2017-09-08T17:37:54.126+03:00",
+    "lastModifiedDate": "2017-09-08T17:37:54.126+03:00",
     "label": "test",
     "fullname": "test",
     "description": "test"
 }
-
 ---------------------------------------------------------------------------------
 
 GET     http://localhost:8080/_ah/start/expenseOwner/v1/expenseOwners
