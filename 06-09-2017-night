@@ -14,7 +14,7 @@ gcloud auth login
 gcloud config set project expense-tracker-178909
 
 #Building the sample project
-mvn package clean
+mvn clean package
 
 #Generating the OpenAPI configuration file
 mvn exec:java -DGetSwaggerDoc
@@ -35,14 +35,81 @@ mvn appengine:run
 #Run deploy online
 mvn appengine:deploy
 
-GET     http://localhost:8080/_ah/api/expense/v1/expenses
-ISSUE 1:
-java.lang.NoClassDefFoundError: Could not initialize class com.google.api.server.spi.tools.devserver.RestApiServlet
-    Removed guava dependency
 
-ISSUE 2:
-java.lang.NoSuchMethodError: com.google.api.server.spi.ObjectMapperUtil.createStandardObjectMapper()Lcom/google/appengine/repackaged/org/codehaus/jackson/map/ObjectMappe
-https://stackoverflow.com/questions/16975899/understanding-a-jsonmappingexception-with-google-endpoint
+-----------------------------------------------------------
+ curl \
+      -H "Content-Type: application/json" \
+      -X POST \
+      -d '{"message":"hello world"}' \
+       http://localhost:8080/_ah/start/echo/v1/echo
 
-https://turbomanage.wordpress.com/2010/01/28/simplify-with-objectify/
+------------------------------------------------------------
+
+ POST: http://localhost:8080/_ah/start/expense/v1/expenses
+ {
+  "label":"test",
+  "description":"test",
+  "amount":100,
+  "expenseOwner":"5629499534213120"
+ }
+
+ RESPONSE
+ =========
+ {
+     "id": "5066549580791808",
+     "createdDate": "2017-09-07T23:15:57.332+03:00",
+     "lastModifiedDate": "2017-09-07T23:15:57.332+03:00",
+     "label": "test",
+     "description": "test",
+     "amount": 100
+ }
+
+ --------------------------------------------------------------------------------
+
+REQUEST
+=======
+POST    http://localhost:8080/_ah/start/expenseOwner/v1/expenseOwners
+{
+ "label":"test",
+ "fullname":"test",
+ "description":"test"
+}
+
+RESPONSE
+=========
+{
+    "id": "5629499534213120",
+    "createdDate": "2017-09-07T23:14:53.708+03:00",
+    "lastModifiedDate": "2017-09-07T23:14:53.708+03:00",
+    "label": "test",
+    "fullname": "test",
+    "description": "test"
+}
+
+---------------------------------------------------------------------------------
+
+GET     http://localhost:8080/_ah/start/expenseOwner/v1/expenseOwners
+
+RESPONSE
+=========
+{
+    "items": [
+        {
+            "id": "5629499534213120",
+            "createdDate": "2017-09-07T22:48:42.706+03:00",
+            "lastModifiedDate": "2017-09-07T22:48:42.706+03:00",
+            "label": "test",
+            "fullname": "test",
+            "description": "test"
+        }
+    ],
+    "nextPageToken": ""
+}
+
+http://localhost:43197/_ah/admin
+
+
+
+
+
 

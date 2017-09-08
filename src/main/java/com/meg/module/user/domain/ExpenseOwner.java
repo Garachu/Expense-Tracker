@@ -42,6 +42,10 @@ public class ExpenseOwner extends BaseEntity {
     @NonNull
     public String description;
 
+    private ExpenseOwner() {
+        super();
+    }
+
     /**
      * List of references to all the expenses that the ExpenseOwner owns.
      *

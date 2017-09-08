@@ -37,7 +37,9 @@
             <param-name>services</param-name>
             <param-value>
                 com.meg.module.expense.web.ExpenseEndPoint,
-                com.meg.module.user.web.ExpenseOwnerEndPoint
+                com.meg.module.user.web.ExpenseOwnerEndPoint,
+                com.meg.module.echo.Echo
+
             </param-value>
         </init-param>
     </servlet>

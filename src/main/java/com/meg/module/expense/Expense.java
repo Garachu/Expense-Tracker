@@ -25,7 +25,7 @@ public class Expense extends BaseEntity{
     public String description;
 
     @NonNull
-    public Double amount;
+    public int amount;
 
 
     /*
@@ -39,6 +39,9 @@ public class Expense extends BaseEntity{
     @NonNull
     Ref<ExpenseOwner> expenseOwner;
 
+    private Expense() {
+        super();
+    }
 
     /**
      * Get actual expenseOwner entity, not just the reference.
@@ -62,7 +65,7 @@ public class Expense extends BaseEntity{
     @Override
     public String toString() {
         return String.format(
-                "Expense[id=%s, label='%s', description='%s', amount='%d']",
-                getId(), label, description, amount);
+                "label='%s', description='%s']",
+                label, description);
     }
 }

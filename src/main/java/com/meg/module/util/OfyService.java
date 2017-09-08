@@ -5,6 +5,7 @@ import com.googlecode.objectify.ObjectifyFactory;
 import com.googlecode.objectify.ObjectifyService;
 import com.meg.module.core.BaseEntity;
 import com.meg.module.expense.Expense;
+import com.meg.module.user.domain.ExpenseOwner;
 import lombok.experimental.UtilityClass;
 
 /**
@@ -36,6 +37,7 @@ public class OfyService {
     static {
         ObjectifyService.register(BaseEntity.class);
         ObjectifyService.register(Expense.class);
+        ObjectifyService.register(ExpenseOwner.class);
     }
 
 
