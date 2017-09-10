@@ -1,21 +1,218 @@
-#Google App Engine is tied to the Servlet 2.5 API, so you can’t deploy a Spring boot Application because it uses the Servlet 3.0.
-#Spring Boot requires Servlet 3.0 which GAE does not have. WorkAround is to have a "spring-boot-legacy" dependency. You can check further how to implement: https://github.com/scratches/spring-boot-sample-gae
 
-2 platforms
--App Engine Flexible
--Container Engine (Kubernetes)
+#Update the Cloud SDK and install the Endpoints components:
+gcloud components update
 
-Runtime differences
-App engine Standard version runs on Google internal container
-App engine flexible version runs on docker which runs on Google container
+#Make sure that Cloud SDK (gcloud) is authorized to access your data and services on Google Cloud Platform:
+gcloud auth login
 
-#list accounts whose credentials are stored on the local system
-gcloud auth list
+#Set the default project to your project ID:
+gcloud config set project expense-tracker-178909
 
-#list the properties in your active SDK configuration
-gcloud config list
+#Building the sample project
+mvn clean package
+mvn clean package clears the datastore-indexes-auto.xml file. If you run it on your app prior to deploying, you won't get required indexes and you won't be able to deploy successfully.
 
-#view information your Cloud SDK installation and the active SDK configurat
-gcloud info
+#Generating the OpenAPI configuration file
+mvn exec:java -DGetSwaggerDoc
 
-gcloud components update app-engine-java
+#Deploying the Endpoints configuration
+gcloud service-management deploy openapi.json
+
+#Set the ENDPOINTS_SERVICE_NAME environment variable to: [YOUR_PROJECT_ID].appspot.com
+export ENDPOINTS_SERVICE_NAME=expense-tracker-178909.appspot.com
+
+#Acquire new user credentials to use for Application Default Credentials.
+gcloud auth application-default login
+
+#Run the development server:
+mvn appengine:run
+/opt/appengine-java-sdk-1.9.54/bin/dev_appserver.sh /media/meg/Round/Meg/Projects/IntelliJ/Expense-Tracker/target/Expense-Tracker-0.0.1-SNAPSHOT
+
+#Run deploy online
+mvn appengine:deploy
+
+The admin console is running at http://localhost:36433/_ah/admin
+Module instance default instance 1 is running at http://localhost:44309/
+
+
+-------------------------------------------------------------------------------
+REQUEST
+=======
+POST    http://localhost:8080/_ah/start/expenseOwner/v1/expenseOwners
+{
+ "label":"shop",
+ "fullname":"shop instance one",
+ "description":"shop instance one expense owner"
+}
+
+RESPONSE
+=========
+{
+    "id": "5629499534213120",
+    "createdDate": "2017-09-09T01:00:23.347+03:00",
+    "lastModifiedDate": "2017-09-09T01:00:23.347+03:00",
+    "label": "test",
+    "fullname": "test",
+    "description": "test"
+}
+----------------------------------------------------------------------------------
+
+REQUEST
+=======
+POST    http://localhost:8080/_ah/start/expenseOwner/v1/expenseOwners
+{
+ "label":"test Owner 2",
+ "fullname":"test Owner 2",
+ "description":"test Owner 2"
+}
+
+RESPONSE
+=========
+{
+    "id": "5066549580791808",
+    "createdDate": "2017-09-09T01:01:04.275+03:00",
+    "lastModifiedDate": "2017-09-09T01:01:04.275+03:00",
+    "label": "test Owner 2",
+    "fullname": "test Owner 2",
+    "description": "test Owner 2"
+}
+
+
+
+
+ POST: http://localhost:8080/_ah/start/expense/v1/expenses
+ {
+  "label":"test",
+  "description":"test",
+  "amount":100,
+  "expenseOwner":"5629499534213120"
+ }
+
+ RESPONSE
+ =========
+{
+    "id": "6192449487634432",
+    "createdDate": "2017-09-09T01:02:04.032+03:00",
+    "lastModifiedDate": "2017-09-09T01:02:04.032+03:00",
+    "label": "test",
+    "description": "test",
+    "amount": 100
+}
+
+ POST: http://localhost:8080/_ah/start/expense/v1/expenses
+ {
+  "label":"test",
+  "description":"test",
+  "amount":100,
+  "expenseOwner":"5066549580791808"
+ }
+
+ RESPONSE
+ =========
+{
+    "id": "4785074604081152",
+    "createdDate": "2017-09-09T01:02:47.201+03:00",
+    "lastModifiedDate": "2017-09-09T01:02:47.201+03:00",
+    "label": "test",
+    "description": "test",
+    "amount": 100
+}
+
+
+
+
+-----------------------------------------------------------
+ curl \
+      -H "Content-Type: application/json" \
+      -X POST \
+      -d '{"message":"hello world"}' \
+       http://localhost:8080/_ah/start/echo/v1/echo
+
+POST:  http://localhost:8080/_ah/start/echo/v1/echo
+{
+   "message":"hello world"
+}
+
+------------------------------------------------------------
+
+ POST: http://localhost:8080/_ah/start/expense/v1/expenses
+ {
+  "label":"test",
+  "description":"test",
+  "amount":100,
+  "expenseOwner":"5066549580791808"
+ }
+
+ RESPONSE
+ =========
+{
+    "id": "5629499534213120",
+    "createdDate": "2017-09-08T17:36:38.877+03:00",
+    "lastModifiedDate": "2017-09-08T17:36:38.877+03:00",
+    "label": "test",
+    "description": "test",
+    "amount": 100
+}
+
+ --------------------------------------------------------------------------------
+
+REQUEST
+=======
+POST    http://localhost:8080/_ah/start/expenseOwner/v1/expenseOwners
+{
+ "label":"test",
+ "fullname":"test",
+ "description":"test"
+}
+
+RESPONSE
+=========
+{
+    "id": "5066549580791808",
+    "createdDate": "2017-09-08T17:37:54.126+03:00",
+    "lastModifiedDate": "2017-09-08T17:37:54.126+03:00",
+    "label": "test",
+    "fullname": "test",
+    "description": "test"
+}
+---------------------------------------------------------------------------------
+
+GET     http://localhost:8080/_ah/start/expenseOwner/v1/expenseOwners
+
+RESPONSE
+=========
+{
+    "items": [
+        {
+            "id": "5629499534213120",
+            "createdDate": "2017-09-07T22:48:42.706+03:00",
+            "lastModifiedDate": "2017-09-07T22:48:42.706+03:00",
+            "label": "test",
+            "fullname": "test",
+            "description": "test"
+        }
+    ],
+    "nextPageToken": ""
+}
+
+http://localhost:43197/_ah/admin
+
+SLF4J: The requested version 1.6.99 by your slf4j binding is not compatible with [1.5.5, 1.5.6]
+SLF4J: See http://www.slf4j.org/codes.html#version_mismatch for further details.
+Error: Multiple conflicting definitions found for issuer firebase
+
+
+mvn dependency:resolve
+mvn dependency:tree
+mvn dependency:tree -Dverbose
+
+http://localhost:40841/_ah/admin
+
+
+
+
+
+
+
+
+

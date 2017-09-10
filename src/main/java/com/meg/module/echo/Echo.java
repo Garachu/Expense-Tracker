@@ -111,7 +111,7 @@ public class Echo {
   }
 
   /**
-   * Gets the authenticated user's email. If the user is not authenticated, this will return an HTTP
+   * Gets the authenticated expenseowner's email. If the expenseowner is not authenticated, this will return an HTTP
    * 401.
    *
    * Note that name is not specified. This will default to "{class name}.{method name}". For
@@ -139,7 +139,7 @@ public class Echo {
   // [END google_id_token_auth]
 
   /**
-   * Gets the authenticated user's email. If the user is not authenticated, this will return an HTTP
+   * Gets the authenticated expenseowner's email. If the expenseowner is not authenticated, this will return an HTTP
    * 401.
    *
    * Note that name is not specified. This will default to "{class name}.{method name}". For

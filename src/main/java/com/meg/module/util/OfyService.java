@@ -4,8 +4,8 @@ import com.googlecode.objectify.Objectify;
 import com.googlecode.objectify.ObjectifyFactory;
 import com.googlecode.objectify.ObjectifyService;
 import com.meg.module.core.BaseEntity;
-import com.meg.module.expense.Expense;
-import com.meg.module.user.domain.ExpenseOwner;
+import com.meg.module.expense.domain.Expense;
+import com.meg.module.expenseowner.domain.ExpenseOwner;
 import lombok.experimental.UtilityClass;
 
 /**
@@ -44,8 +44,11 @@ public class OfyService {
     /**
      * ObjectifyService.ofy()
      * The method to call at any time to get the current Objectify, which may change depending on txn context
+     *
+     * All datastore operations begin with an instance of Objectify
      */
     public static Objectify ofy() {
+
         return ObjectifyService.ofy();
     }
 

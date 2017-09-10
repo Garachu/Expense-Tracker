@@ -7,10 +7,8 @@ import com.google.appengine.api.datastore.Cursor;
 import com.google.appengine.api.datastore.QueryResultIterator;
 import com.googlecode.objectify.cmd.Query;
 import lombok.extern.java.Log;
-
 import java.util.ArrayList;
 import java.util.List;
-
 import static com.meg.module.util.OfyService.ofy;
 
 /**

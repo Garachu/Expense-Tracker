@@ -1,15 +1,13 @@
-package com.meg.module.user.web;
+package com.meg.module.expenseowner.web;
 
 import com.google.api.server.spi.config.*;
 import com.google.api.server.spi.response.CollectionResponse;
 import com.google.api.server.spi.response.InternalServerErrorException;
 import com.google.api.server.spi.response.NotFoundException;
 import com.google.api.server.spi.response.UnauthorizedException;
-import com.meg.module.user.domain.ExpenseOwner;
-import com.meg.module.user.domain.ExpenseOwnerService;
-
+import com.meg.module.expenseowner.domain.ExpenseOwner;
+import com.meg.module.expenseowner.domain.ExpenseOwnerServiceImp;
 import javax.validation.constraints.NotNull;
-
 import static com.google.appengine.repackaged.com.google.api.client.http.HttpMethods.GET;
 import static com.google.appengine.repackaged.com.google.api.client.http.HttpMethods.POST;
 
@@ -38,10 +36,10 @@ import static com.google.appengine.repackaged.com.google.api.client.http.HttpMet
 )
 public class ExpenseOwnerEndPoint {
 
-    private final ExpenseOwnerService eos = new ExpenseOwnerService();
+    private final ExpenseOwnerService eos = new ExpenseOwnerServiceImp();
 
     /**
-     * Create a Expense in the datastoreq33
+     * Create a ExpenseOwner in the datastoreq33
      */
     @ApiMethod(name = "addExpenseOwner", path="expenseOwners", httpMethod = POST)
     public ExpenseOwner addExpenseOwner(final ExpenseOwner eo){
@@ -49,7 +47,7 @@ public class ExpenseOwnerEndPoint {
     }
 
     /**
-     * Obtain multiple Expenses from the datastore
+     * Obtain multiple ExpenseOwners from the datastore
      */
     @ApiMethod(name = "listExpenseOwners", path="expenseOwners", httpMethod = GET)
     public CollectionResponse<ExpenseOwner> listExpenseOwners(@Nullable @Named("cursor") final String cursor, @Nullable @Named("limit") @DefaultValue("50") final Integer limit) throws UnauthorizedException, UnauthorizedException {
@@ -57,7 +55,7 @@ public class ExpenseOwnerEndPoint {
     }
 
     /**
-     * Obtain one Expense that has the supplied id from the datastore
+     * Obtain one ExpenseOwner that has the supplied id from the datastore
      */
     @ApiMethod(name = "getExpenseOwner", path="expenseOwners/{id}", httpMethod = GET)
     public ExpenseOwner getExpenseOwner(@NotNull @Named("id") final Long id) throws NotFoundException, UnauthorizedException, InternalServerErrorException {

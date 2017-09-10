@@ -5,11 +5,12 @@ import com.google.api.server.spi.response.CollectionResponse;
 import com.google.api.server.spi.response.InternalServerErrorException;
 import com.google.api.server.spi.response.NotFoundException;
 import com.google.api.server.spi.response.UnauthorizedException;
-import com.meg.module.expense.Expense;
-import com.meg.module.expense.ExpenseService;
+import com.meg.module.expense.domain.Expense;
+import com.meg.module.expense.domain.ExpenseRequest;
+import com.meg.module.expense.domain.ExpenseServiceImp;
+import lombok.extern.java.Log;
 import javax.annotation.Nullable;
 import javax.validation.constraints.NotNull;
-
 import static com.google.api.server.spi.config.ApiMethod.HttpMethod.*;
 
 /**
@@ -20,7 +21,8 @@ import static com.google.api.server.spi.config.ApiMethod.HttpMethod.*;
 /**
  * @Api contains the configuration details of the backend API
  * @ApiMethod marks a class method that is part of the backend API.
- * Methods that are not marked with @ApiMethod are not included when you generate client libraries and discovery docs. The @ApiMethod annotation can also be used to override the API configuration for a specific method.
+ * Methods that are not marked with @ApiMethod are not included when you generate client libraries and discovery docs.
+ * The @ApiMethod annotation can also be used to override the API configuration for a specific method.
  */
 
 @Api(
@@ -42,27 +44,30 @@ import static com.google.api.server.spi.config.ApiMethod.HttpMethod.*;
         // [END_EXCLUDE]
 )
 // [END echo_api_annotation]
+@Log
 public class ExpenseEndPoint {
-
-    private static final ExpenseService expenseService = new ExpenseService();
 
     /**
      * Create a Expense in the datastoreq33
      */
-//    @ApiMethod(name = "test", path="test", httpMethod = GET)
-//    public String test(){
-//
-//        return "Hey there";
+//    @ApiMethod(name = "addExpense", path="expenses", httpMethod = POST)
+//    public Expense addExpense(final Expense expense){
+//        log.info("addExpense " + expense.getExpenseOwner());
+//        return expenseService.addExpense(expense);
 //    }
+
+    ExpenseService expenseService = new ExpenseServiceImp();
 
 
     /**
      * Create a Expense in the datastoreq33
      */
     @ApiMethod(name = "addExpense", path="expenses", httpMethod = POST)
-    public Expense addExpense(final Expense expense){
-        return expenseService.addExpense(expense);
+    public Expense addExpense(final ExpenseRequest expenseRequest) throws NotFoundException, InternalServerErrorException {
+        log.info("addExpense " + expenseRequest.getExpenseOwner());
+        return expenseService.addExpense(expenseRequest);
     }
+
 
     /**
      * Obtain multiple Expenses from the datastore
@@ -70,6 +75,14 @@ public class ExpenseEndPoint {
     @ApiMethod(name = "listExpenses", path="expenses", httpMethod = GET)
     public CollectionResponse<Expense> listExpenses(@Nullable @Named("cursor") final String cursor, @Nullable @Named("limit") @DefaultValue("50") final Integer limit) throws UnauthorizedException {
         return expenseService.findExpenses(cursor, limit);
+    }
+
+    /**
+     * Obtain multiple Expenses from the datastore
+     */
+    @ApiMethod(name = "listExpensesByExpenseOwner", path="expenses/expenseowner/{expenseownerid}", httpMethod = GET)
+    public CollectionResponse<Expense> listExpensesByExpenseOwner(@NotNull @Named("expenseownerid") final Long expenseownerid, @Nullable @Named("cursor") final String cursor, @Nullable @Named("limit") @DefaultValue("50") final Integer limit) throws UnauthorizedException, NotFoundException, InternalServerErrorException {
+        return expenseService.findExpensesByExpenseOwner(cursor, limit, expenseownerid);
     }
 
     /**

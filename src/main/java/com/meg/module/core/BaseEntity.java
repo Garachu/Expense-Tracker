@@ -2,9 +2,7 @@ package com.meg.module.core;
 
 import com.googlecode.objectify.annotation.Entity;
 import com.googlecode.objectify.annotation.Id;
-import lombok.NoArgsConstructor;
 import lombok.NonNull;
-
 import java.util.Date;
 
 /**
